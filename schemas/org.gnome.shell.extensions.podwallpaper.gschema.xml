@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schemalist>
+  <schema id="org.gnome.shell.extensions.podwallpaper" path="/org/gnome/shell/extensions/podwallpaper/">
+    <key name="indicator-position" type="i">
+      <default>0</default>
+      <summary>Indicator position</summary>
+      <description>Position index on the topbar.</description>
+    </key>
+  </schema>
+</schemalist>

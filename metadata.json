@@ -4,5 +4,6 @@
   "uuid": "podwallpaper@petarda.tuta.io",
   "shell-version": [
     "49"
-  ]
+  ],
+  "settings-schema": "org.gnome.shell.extensions.podwallpaper"
 }
