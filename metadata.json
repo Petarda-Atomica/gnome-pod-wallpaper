@@ -1,0 +1,8 @@
+{
+  "name": "Picture Of the Day Wallpaper",
+  "description": "Set your wallpaper to a new picture everyday.",
+  "uuid": "podwallpaper@petarda.tuta.io",
+  "shell-version": [
+    "49"
+  ]
+}
