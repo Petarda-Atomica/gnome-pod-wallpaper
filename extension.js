@@ -12,6 +12,8 @@ import * as Main from 'resource:///org/gnome/shell/ui/main.js';
 import * as PanelMenu from 'resource:///org/gnome/shell/ui/panelMenu.js';
 import * as PopupMenu from 'resource:///org/gnome/shell/ui/popupMenu.js';
 
+import { BingDownload } from './providers/bing.js'
+
 const SCHEMA_ID = 'org.gnome.shell.extensions.podwallpaper';
 const IndicatorName = 'PODWallpaperIndicator';
 
@@ -54,7 +56,10 @@ const PODWallpaperIndicator =  GObject.registerClass({
     _buildMenu() {
         const refreshItem = new PopupMenu.PopupMenuItem(_('Refresh Wallpaper'));
         refreshItem.connect('activate', () => {
-            this._fetchNewWallpaper();
+            this._fetchNewWallpaper().catch(err => {
+                console.error(`[PodWallpaper] Fetch failed: ${err.message}`);
+                console.error(err.stack);
+            });
         })
         this.menu.addMenuItem(refreshItem);
 
@@ -87,6 +92,41 @@ const PODWallpaperIndicator =  GObject.registerClass({
         // Reposition child container dynamically without re-creating the indicator
         if (parent && typeof parent.set_child_at_index === 'function') {
             parent.set_child_at_index(this.container, position);
+        }
+    }
+
+    async _fetchNewWallpaper() {
+        let provider = this._settings.get_string('pod-website');
+        switch (provider) {
+            case 'astronomy':
+                break;
+
+            case 'bing':
+                const xmlUrl = 'https://www.bing.com/HPImageArchive.aspx?format=xml&idx=0&n=1';
+                const filePath = await BingDownload(xmlUrl, this._settings.get_string('background-position'));
+                console.log(`[podwallpaper] Successfully saved to: ${filePath}`);
+                return filePath;
+
+            case 'guardian':
+                break;
+
+            case 'nasa':
+                break;
+
+            case 'national-geographic':
+                break;
+
+            case 'tumblr':
+                break;
+
+            case 'wikiart':
+                break;
+
+            case 'wikipedia':
+                break;
+        
+            default:
+                break;
         }
     }
 
