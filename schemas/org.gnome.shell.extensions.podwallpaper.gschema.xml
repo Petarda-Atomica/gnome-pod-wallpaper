@@ -1,10 +1,64 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <schemalist>
   <schema id="org.gnome.shell.extensions.podwallpaper" path="/org/gnome/shell/extensions/podwallpaper/">
+    
+    <key name="hide-indicator" type="b">
+      <default>false</default>
+      <summary>Hide indicator</summary>
+      <description>Wether to hide the indicator or not.</description>
+    </key>
+    
     <key name="indicator-position" type="i">
       <default>0</default>
       <summary>Indicator position</summary>
       <description>Position index on the topbar.</description>
     </key>
+
+
+    <key name="pod-website" type="s">
+      <default>'bing'</default>
+      <summary>Picture provider</summary>
+      <description>From who to get the picture of the day.</description>
+    </key>
+
+    <key name="background-position" type="s">
+      <default>'zoom'</default>
+      <summary>Background position</summary>
+      <description>How the backgorund is positioned.</description>
+    </key>
+
+    <key name="refresh-on-metered" type="b">
+      <default>true</default>
+      <summary>Auto refresh on metered networks</summary>
+      <description>Wether to automatically refresh on metered networks.</description>
+    </key>
+
+
+    <key name="notification-new" type="b">
+      <default>true</default>
+      <summary>Notify when a new image is downloaded</summary>
+      <description>A notification will appear with the explanation of the day.</description>
+    </key>
+
+    <key name="notification-transient" type="b">
+      <default>true</default>
+      <summary>Use transient notifications</summary>
+      <description>Just hover with your mouse to dismiss it</description>
+    </key>
+
+
+    <key name="download-video-thumbnails" type="b">
+      <default>true</default>
+      <summary>Download video thumbnails</summary>
+      <description>If the requested image of the day is a video, donwload its thumbnail.</description>
+    </key>
+
+
+    <key name="nasa-api-key" type="s">
+      <default>''</default>
+      <summary>NASA API key</summary>
+      <description>You may want to get yours at https://api.nasa.gov/index.html#apply-for-an-api-key</description>
+    </key>
+
   </schema>
 </schemalist>
