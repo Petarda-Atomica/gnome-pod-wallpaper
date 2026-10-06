@@ -13,6 +13,7 @@ import * as PanelMenu from 'resource:///org/gnome/shell/ui/panelMenu.js';
 import * as PopupMenu from 'resource:///org/gnome/shell/ui/popupMenu.js';
 
 import { BingDownload } from './providers/bing.js'
+import { NasaDownload } from './providers/nasa.js';
 
 const SCHEMA_ID = 'org.gnome.shell.extensions.podwallpaper';
 const IndicatorName = 'PODWallpaperIndicator';
@@ -104,13 +105,16 @@ const PODWallpaperIndicator =  GObject.registerClass({
 
             case 'bing':
                 const xmlUrl = 'https://www.bing.com/HPImageArchive.aspx?format=xml&idx=0&n=1';
-                filePath = await BingDownload(xmlUrl, this._settings.get_string('background-position'));
+                filePath = await BingDownload(xmlUrl);
                 console.log(`[podwallpaper] Successfully saved to: ${filePath}`);
 
             case 'guardian':
                 break;
 
             case 'nasa':
+                const API_KEY = this._settings.get_string("nasa-api-key");
+                const downloadVideo = this._settings.get_boolean("download-video-thumbnails");
+                filePath = await NasaDownload(API_KEY, downloadVideo);
                 break;
 
             case 'national-geographic':
@@ -130,12 +134,12 @@ const PODWallpaperIndicator =  GObject.registerClass({
 
             }
 
-        this._setBackground(filePath);
+        this._setBackground(filePath, this._settings.get_string('background-position'));
 
         return filePath;
     }
 
-    _setBackground(filePath) {
+    _setBackground(filePath, mode) {
         const bkg_settings = new Gio.Settings({ schema_id: 'org.gnome.desktop.background' });
         const fileUri = filePath.startsWith('file://')
             ? filePath

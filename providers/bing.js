@@ -11,7 +11,6 @@ Gio._promisify(Gio.File.prototype, 'replace_contents_bytes_async', 'replace_cont
  * and downloads the image into ~/.cache/podwallpaper/bing.png.
  * 
  * @param {string} xmlUrl - The URL of the XML document.
- * @param {string} mode - The desktop image display mode.
  * @returns {Promise<string>} The local file path where the image was saved.
  */
 export async function BingDownload(xmlUrl, mode) {
@@ -81,8 +80,8 @@ export async function BingDownload(xmlUrl, mode) {
         throw new Error(`Image download failed with status: ${imgMessage.get_status()}`);
     }
 
-    // 5. Save file to disk as ~/.cache/podwallpaper/wallpaper.png
-    const filePath = GLib.build_filenamev([targetFolder, 'wallpaper.png']);
+    // 5. Save file to disk as ~/.cache/podwallpaper/bing.png
+    const filePath = GLib.build_filenamev([targetFolder, 'bing.png']);
     const destinationFile = Gio.File.new_for_path(filePath);
 
     await destinationFile.replace_contents_bytes_async(
