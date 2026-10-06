@@ -97,15 +97,15 @@ const PODWallpaperIndicator =  GObject.registerClass({
 
     async _fetchNewWallpaper() {
         let provider = this._settings.get_string('pod-website');
+        let filePath;
         switch (provider) {
             case 'astronomy':
                 break;
 
             case 'bing':
                 const xmlUrl = 'https://www.bing.com/HPImageArchive.aspx?format=xml&idx=0&n=1';
-                const filePath = await BingDownload(xmlUrl, this._settings.get_string('background-position'));
+                filePath = await BingDownload(xmlUrl, this._settings.get_string('background-position'));
                 console.log(`[podwallpaper] Successfully saved to: ${filePath}`);
-                return filePath;
 
             case 'guardian':
                 break;
@@ -127,7 +127,22 @@ const PODWallpaperIndicator =  GObject.registerClass({
         
             default:
                 break;
-        }
+
+            }
+
+        this._setBackground(filePath);
+
+        return filePath;
+    }
+
+    _setBackground(filePath) {
+        const bkg_settings = new Gio.Settings({ schema_id: 'org.gnome.desktop.background' });
+        const fileUri = filePath.startsWith('file://')
+            ? filePath
+            : Gio.File.new_for_path(filePath).get_uri();
+        bkg_settings.set_string('picture-uri', fileUri);
+        bkg_settings.set_string('picture-uri-dark', fileUri);
+        bkg_settings.set_string('picture-options', mode)
     }
 
     destroy() {

@@ -93,14 +93,5 @@ export async function BingDownload(xmlUrl, mode) {
         null
     );
 
-    // 6. Set as background
-    const bkg_settings = new Gio.Settings({ schema_id: 'org.gnome.desktop.background' });
-    const fileUri = filePath.startsWith('file://')
-        ? filePath
-        : Gio.File.new_for_path(filePath).get_uri();
-    bkg_settings.set_string('picture-uri', fileUri);
-    bkg_settings.set_string('picture-uri-dark', fileUri);
-    bkg_settings.set_string('picture-options', mode)
-
     return filePath;
 }
